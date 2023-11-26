@@ -4,30 +4,17 @@ import { useEffect } from "react";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { useState } from "react";
 import { FIREBASE_AUTH } from "./firebaseConfig";
-import List from "./app/screens/List";
+import Home from "./app/screens/Home";
 import Login from "./app/screens/Login";
-import Details from "./app/screens/Details";
 
 const Stack = createNativeStackNavigator();
 
-const InsideStack = createNativeStackNavigator();
-
-function InsideLayout() {
-  return (
-    <InsideStack.Navigator>
-      <InsideStack.Screen name="My Todos" component={List} />
-      <InsideStack.Screen
-        name="details"
-        options={{ title: "Details Page" }}
-        component={Details}
-      />
-    </InsideStack.Navigator>
-  );
-}
-
 export default function App() {
+  // Note: creating a react state to store the user.
   const [user, setUser] = useState(null);
 
+  // Note: useEffect with empty dependency array [] means it will run
+  // every time this component is mounted.
   useEffect(() => {
     onAuthStateChanged(FIREBASE_AUTH, (user) => {
       setUser(user);
@@ -39,7 +26,7 @@ export default function App() {
       <Stack.Navigator initialRouteName="Login">
         {user ? (
           <Stack.Screen
-            component={InsideLayout}
+            component={Home}
             name="Inside"
             options={{ headerShown: false }}
           />
@@ -54,3 +41,13 @@ export default function App() {
     </NavigationContainer>
   );
 }
+
+// const InsideStack = createNativeStackNavigator();
+
+// function InsideLayout() {
+//   return (
+//     <InsideStack.Navigator>
+//       <InsideStack.Screen name="My Todos" component={Home} />
+//     </InsideStack.Navigator>
+//   );
+// }

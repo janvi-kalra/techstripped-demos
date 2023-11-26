@@ -12,7 +12,6 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { FIREBASE_AUTH } from "../../firebaseConfig";
-import { FirebaseError } from "firebase/app";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -24,7 +23,6 @@ const Login = () => {
     setLoading(true);
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      alert("Check your emails!");
     } catch (err) {
       alert("Registration failed: " + err.message);
     }
